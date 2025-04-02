@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "signals.h"
 #include "parser.h"
+#include "executor.h"
+#include "signals.h"
+#include "jobs.h"
 
 #define MAX_LINE 1024
 
 int main() {
     char line[MAX_LINE];
-    char *argv[64];
 
     setup_signal_handlers();
 
@@ -18,7 +19,7 @@ int main() {
 
         if (fgets(line, MAX_LINE, stdin) == NULL) {
             printf("\n");
-            break;
+            break;  // EOF (Ctrl+D)
         }
 
         // Remove trailing newline
@@ -26,22 +27,22 @@ int main() {
 
         if (strlen(line) == 0) continue;
 
-        // Special command to quit
-        if (strcmp(line, "exit") == 0) break;
+        struct command *cmd = parse_line(line);
+        if (cmd != NULL) {
+            execute_command(cmd);
+            free_command(cmd);
+        }
 
-        // parse into argv
-        parse_command(line, argv);
+        if (strcmp(line, "jobs") == 0) {
+            print_jobs();
+            continue;
+        }
 
-        pid_t pid = fork();
-        if (pid == 0) {
-            execvp(argv[0], argv);
-            perror("execvp failed");
-            exit(1);
-        } else {
-            waitpid(pid, NULL, 0);
+        if (strcmp(line, "exit") == 0 || strcmp(line, "quit") == 0) {
+            printf("Goodbye!\n");
+            break;
         }
     }
 
-    printf("Bye!\n");
     return 0;
 }

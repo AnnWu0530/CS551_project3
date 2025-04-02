@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -g
-OBJS = main.o parser.o executor.o signals.o jobs.o utils.o
+OBJS = main.o parser.o executor.o signals.o jobs.o
 
-myshell: $(OBJS)
-	$(CC) -o myshell $(OBJS)
+mysh: $(OBJS)
+	$(CC) -o mysh $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f *.o myshell
+	rm -f *.o mysh

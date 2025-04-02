@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "executor.h"
+#include "jobs.h"
 
 pid_t child_pid = -1;
 
@@ -24,7 +25,9 @@ void execute_command(struct command *cmd) {
         if (!cmd->background) {
             int status;
             waitpid(pid, &status, 0);
+            child_pid = -1;
         } else {
+            add_job(pid, cmd->argv[0]);
             printf("[Background] PID: %d\n", pid);
         }
         child_pid = -1;
