@@ -7,73 +7,80 @@
 
 pid_t pid;
 
-/* Function to handle the quit signal */
-static void sig_usr(int signo) {
-    char const *command = "jobs\0";
-	switch(signo) {
-	   case SIGINT: 
-		printf("\nChild process interrupt\n");
-		if (pid > 0) kill(pid, SIGSTOP);
-		break;
-	   case SIGQUIT:
-	   	printf("Parent process received quit signal (Control-\\). Exiting...\n");
-    	exit(0);
-	   case SIGTSTP:
-		printf("\nChild process suspended\n");
-		if (pid > 0) kill(pid, SIGKILL);
-		break;
-	   default:
-		printf("received signal %d\n", signo);
-	}
+volatile sig_atomic_t child_pid = -1;
+
+void sig_handler(int signo) {
+    if (child_pid > 0) {
+        switch (signo) {
+            case SIGINT:
+                printf("\n[Parent] SIGINT received: interrupting child process...\n");
+                kill(child_pid, SIGINT);
+                break;
+            case SIGTSTP:
+                printf("\n[Parent] SIGTSTP received: suspending child process...\n");
+                kill(child_pid, SIGTSTP);
+                break;
+            case SIGQUIT:
+                printf("\n[Parent] SIGQUIT received: exiting program...\n");
+                if (child_pid > 0) kill(child_pid, SIGKILL);
+                exit(0);
+        }
+    }
 }
 
-int main(int argc, char **argv) {
-    int status;
+void setup_signal_handlers() {
+    signal(SIGINT, sig_handler);
+    signal(SIGTSTP, sig_handler);
+    signal(SIGQUIT, sig_handler);
+}
 
-    if (argc < 2) {
-        printf("Usage: %s <command> [args]\n", argv[0]);
-        exit(-1);
-    }
+void run_command(char *cmd) {
+    child_pid = fork();
 
-    /* Install signal handler for the quit signal */
-	if (signal(SIGINT, sig_usr) == SIG_ERR) {
-		printf("can't catch SIGINT\n");
-		exit(-1);
-	}
-	if (signal(SIGQUIT, sig_usr) == SIG_ERR) {
-		printf("can't catch SIGQUIT\n");
-		exit(-1);
-	}
-	if (signal(SIGTSTP, sig_usr) == SIG_ERR) {
-		printf("can't catch SIGTSTP\n");
-		exit(-1);
-	}
-
-    pid = fork();
-    if (pid == 0) { 
-        execvp(argv[1], &argv[1]);
-        printf("If you see this statement then execvp failed ;-(\n");
-    perror("execvp");
-    exit(-1);
-    } else if (pid > 0) { 
-        printf("Wait for the child process to terminate\n");
-        while(1) {
-            pause();
-        }
-    } else { 
-        perror("fork"); 
+    if (child_pid < 0) {
+        perror("fork failed");
         exit(EXIT_FAILURE);
     }
 
-	wait(&status); 
-    if (WIFEXITED(status)) { 
-        printf("Child process exited with status = %d\n", WEXITSTATUS(status));
-    } else { 
-        printf("Child process did not terminate normally!\n");
-        
+    if (child_pid == 0) {
+        // child
+        execlp(cmd, cmd, (char *)NULL);
+        perror("execlp failed");
+        exit(EXIT_FAILURE);
+    } else {
+        // parent
+        int status;
+        waitpid(child_pid, &status, 0);
+
+        if (WIFEXITED(status)) {
+            printf("[Parent] Child '%s' exited with status %d\n", cmd, WEXITSTATUS(status));
+        } else if (WIFSIGNALED(status)) {
+            printf("[Parent] Child '%s' terminated by signal %d\n", cmd, WTERMSIG(status));
+        }
+        child_pid = -1;
     }
-    
-    printf("[%ld]: Exiting program .....\n", (long)getpid());
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s <command1> <command2>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    setup_signal_handlers();
+
+    printf("[Parent] Starting execution of '%s'\n", argv[1]);
+    run_command(argv[1]);
+
+    printf("[Parent] Starting execution of '%s'\n", argv[2]);
+    run_command(argv[2]);
+
+    printf("[Parent] All commands processed. Waiting for quit signal (Ctrl-\\)...\n");
+
+    // Just wait forever until user sends SIGQUIT
+    while (1) {
+        pause();
+    }
 
     return 0;
 }
