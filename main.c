@@ -27,10 +27,9 @@ int main() {
 
         if (strlen(line) == 0) continue;
 
-        struct command *cmd = parse_line(line);
-        if (cmd != NULL) {
-            execute_command(cmd);
-            free_command(cmd);
+        if (strcmp(line, "exit") == 0 || strcmp(line, "quit") == 0) {
+            printf("Goodbye!\n");
+            exit(-1);
         }
 
         if (strcmp(line, "jobs") == 0) {
@@ -38,9 +37,22 @@ int main() {
             continue;
         }
 
-        if (strcmp(line, "exit") == 0 || strcmp(line, "quit") == 0) {
-            printf("Goodbye!\n");
-            break;
+        if (strncmp(line, "fg", 4) == 0) {
+            int id = atoi(line + 2);
+            bring_job_to_foreground(id);
+            continue;
+        }
+        
+        if (strncmp(line, "bg", 4) == 0) {
+            int id = atoi(line + 2);
+            continue_job_in_background(id);
+            continue;
+        }
+
+        struct command *cmd = parse_line(line);
+        if (cmd != NULL) {
+            execute_command(cmd);
+            free_command(cmd);
         }
     }
 
