@@ -1,6 +1,3 @@
-Below is a sample README that outlines your project's goals and includes additional enhancement ideas you might consider. You can adjust it based on your project's specifics:
-
----
 
 # mysh - A Minimal Unix Shell
 
