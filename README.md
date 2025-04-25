@@ -9,6 +9,7 @@
 - **Background Execution:** Using `&` to execute commands in the background.
 - **Signal Handling:** Managing signals like Ctrl+C, Ctrl+Z, and Ctrl+\ to ensure smooth user interactions.
 - **Job Management:** Providing a `jobs` command to display and manage active background processes.
+- **History Command:** Able to store previous command and print them out.
 
 The shell continuously accepts user input and provides feedback similar to traditional Unix shells.
 
@@ -18,6 +19,7 @@ The shell continuously accepts user input and provides feedback similar to tradi
 - **Background Processing:** Append `&` to commands to run them in the background.
 - **Robust Signal Handling:** Properly handles interrupt, stop, and quit signals.
 - **Job Control:** Easily list background jobs with the `jobs` command.
+- **History search** Can search for the commands in the history.
 
 ## Getting Started
 
