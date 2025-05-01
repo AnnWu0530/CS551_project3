@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
+#include <string.h>
 #include "executor.h"
 #include "jobs.h"
 
@@ -17,7 +19,14 @@ void execute_command(struct command *cmd) {
     if (pid == 0) {
         // Child process
         execvp(cmd->argv[0], cmd->argv);
-        perror("execvp");
+        
+        // If we get here, execvp failed
+        // Use more user-friendly error messages
+        if (errno == ENOENT) {
+            fprintf(stderr, "%s: command not found\n", cmd->argv[0]);
+        } else {
+            perror("execvp");
+        }
         exit(EXIT_FAILURE);
     } else {
         // Parent
