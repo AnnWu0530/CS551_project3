@@ -15,7 +15,7 @@ The shell continuously accepts user input and provides feedback similar to tradi
 
 ## Achieved Command
 
-#### Built-in Commands
+### Built-in Commands
   cd          Change the current directory (except cd - and cd ~)
   pwd        Print the current working directory
   echo       Print arguments to stdout
@@ -30,7 +30,7 @@ The shell continuously accepts user input and provides feedback similar to tradi
   kill       Send signal to jobs/processes
   history    Display command history, search by !(index)
 
-#### External Commands
+### External Commands
 All of External Command contained.
 
 
