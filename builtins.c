@@ -25,6 +25,17 @@ static builtin_t builtins[] = {
     {NULL, NULL, NULL}
 };
 
+static builtin_t others[] = {
+    {"alias", builtin_cd, "Change the current directory"},
+    {"jobs", builtin_pwd, "List active jobs"},
+    {"fg", builtin_echo, "Resume job in foreground"},
+    {"bg", builtin_export, "Resume job in background"},
+    {"kill", builtin_unset, "Send signal to jobs/processes"},
+    {"history", builtin_exit, "Display command history"},
+    {NULL, NULL, NULL},
+    {NULL, NULL, NULL}
+};
+
 // Execute a built-in command if the command matches one
 int execute_builtin(struct command *cmd) {
     if (!cmd || !cmd->argv[0]) return 0;
@@ -62,11 +73,12 @@ int builtin_cd(char **args) {
     char cwd[PATH_MAX];
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         env_set("PWD", cwd);
+        printf("Now directort:%s\n", cwd);
     } else {
         perror("getcwd");
     }
     
-    return 0;
+    return 1;
 }
 
 // pwd - Print working directory
@@ -81,7 +93,7 @@ int builtin_pwd(char **args) {
         perror("pwd");
         return 1;
     }
-    return 0;
+    return 1;
 }
 
 // echo - Print arguments
@@ -115,7 +127,7 @@ int builtin_echo(char **args) {
         printf("\n");
     }
     
-    return 0;
+    return 1;
 }
 
 // export - Set environment variables
@@ -123,7 +135,7 @@ int builtin_export(char **args) {
     if (!args[1]) {
         // With no arguments, print all environment variables
         env_print();
-        return 0;
+        return 1;
     }
     
     for (int i = 1; args[i]; i++) {
@@ -147,7 +159,7 @@ int builtin_export(char **args) {
         }
     }
     
-    return 0;
+    return 1;
 }
 
 // unset - Unset environment variables
@@ -164,7 +176,7 @@ int builtin_unset(char **args) {
         }
     }
     
-    return 0;
+    return 1;
 }
 
 // exit - Exit the shell
@@ -178,7 +190,7 @@ int builtin_exit(char **args) {
     printf("Goodbye!\n");
     exit(status);
     
-    return 0; // Never reached
+    return 1; // Never reached
 }
 
 // help - Display help about built-in commands
@@ -189,17 +201,26 @@ int builtin_help(char **args) {
         for (int i = 0; builtins[i].name != NULL; i++) {
             printf("  %-10s %s\n", builtins[i].name, builtins[i].help);
         }
+        for (int i = 0; others[i].name != NULL; i++) {
+            printf("  %-10s %s\n", others[i].name, others[i].help);
+        }
     } else {
         // Display help for the specified command
         for (int i = 0; builtins[i].name != NULL; i++) {
             if (strcmp(args[1], builtins[i].name) == 0) {
                 printf("%s: %s\n", builtins[i].name, builtins[i].help);
-                return 0;
+                return 1;
+            }
+        }
+        for (int i = 0; others[i].name != NULL; i++) {
+            if (strcmp(args[1], others[i].name) == 0) {
+                printf("%s: %s\n", others[i].name, others[i].help);
+                return 1;
             }
         }
         fprintf(stderr, "help: no help for %s\n", args[1]);
         return 1;
     }
     
-    return 0;
+    return 1;
 }
