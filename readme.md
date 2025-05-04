@@ -26,7 +26,7 @@ The shell continuously accepts user input and provides feedback similar to tradi
   fg         Resume job in foreground
   bg         Resume job in background
   kill       Send signal to jobs/processes
-  history    Display command history, search by index
+  history    Display command history, search by !(index)
 
 #### External Commands
 All of External Command contained.
