@@ -43,7 +43,7 @@ Ensure your development environment has the necessary tools installed (e.g., a C
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/aoloo-r/CS551_project3.git
+   git clone https://github.com/AnnWu0530/CS551_project3.git
    ```
 2. **Navigate to the Project Directory:**
    ```bash
