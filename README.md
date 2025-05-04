@@ -17,7 +17,7 @@ The shell continuously accepts user input and provides feedback similar to tradi
 
 ### Built-in Commands
 
-  cd          Change the current directory (except cd - and cd ~)
+  cd         Change the current directory (except cd - and cd ~)
   pwd        Print the current working directory
   echo       Print arguments to stdout
   export     Set environment variables
