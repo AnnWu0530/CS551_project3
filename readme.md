@@ -12,7 +12,9 @@
 
 The shell continuously accepts user input and provides feedback similar to traditional Unix shells.
 
+
 ## Achieved Command
+
 #### Built-in Commands
   cd          Change the current directory (except cd - and cd ~)
   pwd        Print the current working directory
@@ -30,7 +32,6 @@ The shell continuously accepts user input and provides feedback similar to tradi
 
 #### External Commands
 All of External Command contained.
-
 
 
 ## Getting Started
@@ -52,6 +53,7 @@ Ensure your development environment has the necessary tools installed (e.g., a C
 3. **Build the Project:**
    Follow the build instructions provided in the documentation (e.g., using `make` or your preferred build system).
 
+
 ## Usage
 
 Start the shell by running:
@@ -66,14 +68,12 @@ Once launched, you can:
 - Use `./test_basic.sh` to test some of built-in commands after `make`. (may need `chmod +x test_basic.sh` before that to give the access right)
 
 
-
-## Contributions
+## Contributions (Alphabetical order)
 
 - Annie Wu: Basic and ideal of project; executor; jobs; parser; signals; main; Functional test
 - Austine Oloo: alias; builtins; completion; config; env; error; executor; glob; redirection ; main; Functional test
-- Xinwei Guo: history; main；Functional test
 - Furui Xiao: builtins; main; Report; Functional test
-
+- Xinwei Guo: history; main；Functional test
 
 
 ## License
@@ -81,13 +81,13 @@ Once launched, you can:
 MIT License
 
 
-
-## Acknowledgements
+## Acknowledgements (Alphabetical order)
 
 - Annie Wu
 - Austine Oloo
-- Xinwei Guo
 - Furui Xiao
+- Xinwei Guo
+
 
 ---
 
