@@ -50,7 +50,7 @@ Ensure your development environment has the necessary tools installed (e.g., a C
    ```
 2. **Navigate to the Project Directory:**
    ```bash
-   cd CS551_project3-main
+   cd CS551_project3
    ```
 3. **Build the Project:**
    Follow the build instructions provided in the documentation (e.g., using `make` or your preferred build system).
