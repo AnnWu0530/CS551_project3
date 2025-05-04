@@ -32,20 +32,6 @@ The shell continuously accepts user input and provides feedback similar to tradi
   history    Display command history, search by !(index)
 ```
 
-&nbsp; cd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change the current directory (except cd - and cd ~)  
-&nbsp; pwd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Print the current working directory  
-&nbsp; echo&nbsp;&nbsp;&nbsp;&nbsp;Print arguments to stdout  
-&nbsp; export&nbsp;&nbsp;Set environment variables  
-&nbsp; unset&nbsp;&nbsp;&nbsp;Unset environment variables  
-&nbsp; exit&nbsp;&nbsp;&nbsp;&nbsp;Exit the shell (or quit)  
-&nbsp; help&nbsp;&nbsp;&nbsp;&nbsp;Display help about built-in commands  
-&nbsp; alias&nbsp;&nbsp;&nbsp;Change the current directory  
-&nbsp; jobs&nbsp;&nbsp;&nbsp;&nbsp;List active jobs  
-&nbsp; fg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resume job in foreground  
-&nbsp; bg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resume job in background  
-&nbsp; kill&nbsp;&nbsp;&nbsp;&nbsp;Send signal to jobs/processes  
-&nbsp; history&nbsp;Display command history, search by !(index)  
-
 ### External Commands
 All of External Command contained.
 
