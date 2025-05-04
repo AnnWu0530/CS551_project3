@@ -31,7 +31,7 @@ static builtin_t others[] = {
     {"fg", builtin_echo, "Resume job in foreground"},
     {"bg", builtin_export, "Resume job in background"},
     {"kill", builtin_unset, "Send signal to jobs/processes"},
-    {"history", builtin_exit, "Display command history"},
+    {"history", builtin_exit, "Display command history/ search by !(index)"},
     {NULL, NULL, NULL},
     {NULL, NULL, NULL}
 };
