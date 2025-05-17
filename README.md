@@ -10,7 +10,8 @@
 - **Job Management:** Providing a `jobs` command to display and manage active background processes.
 - **History Command:** Able to store previous command, search by index, and print them out.
 
-The example use of all built-in command we built can be seen in the [EXtest.md](EXtest.md)
+The example use of all built-in command we built can be seen in the [EXtest.md](EXtest.md).
+
 The shell continuously accepts user input and provides feedback similar to traditional Unix shells.
 
 
