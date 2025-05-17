@@ -6,8 +6,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Path to the shell executable - point to parent directory
-SHELL_PATH="./mysh"
 
 # Test counter
 TESTS_PASSED=0
@@ -48,6 +46,7 @@ run_test() {
 # Create test directory
 mkdir -p test_dir
 cd test_dir
+SHELL_PATH="../mysh"
 
 # Test 1: Simple command execution
 run_test "Simple echo command" "echo Hello, world!" "Hello, world!"
