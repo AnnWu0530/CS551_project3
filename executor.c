@@ -18,6 +18,14 @@ void execute_command(struct command *cmd) {
 
     if (pid == 0) {
         // Child process
+
+        signal(SIGINT, SIG_DFL);
+        signal(SIGTSTP, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+        signal(SIGCHLD, SIG_DFL);
+        signal(SIGTTIN, SIG_DFL);
+        signal(SIGTTOU, SIG_DFL);
+
         execvp(cmd->argv[0], cmd->argv);
         
         // If we get here, execvp failed

@@ -7,8 +7,9 @@
 - **Command Execution:** Running commands with arguments.
 - **Background Execution:** Using `&` to execute commands in the background.
 - **Signal Handling:** Managing signals like Ctrl+C, Ctrl+Z, and Ctrl+\ to ensure smooth user interactions.
-- **Job Management:** Providing a `jobs` command to display and manage active background processes.
+- **Job Management:** Providing a `jobs` command to display and manage all background processes.
 - **History Command:** Able to store previous command, search by index, and print them out.
+- **Close mysh:** Use `exit` or `quit` to end the section
 
 The example use of all built-in command we built can be seen in the [EXtest.md](EXtest.md).
 
@@ -68,7 +69,8 @@ Once launched, you can:
 - Use `help` to look usable Built-in Command
 - Execute commands by typing them in.
 - Use `&` at the end of a command to run it in the background.
-- Press Ctrl+C, Ctrl+Z, or Ctrl+\ to see how the shell handles signals.
+- Use `jobs` to handle the backgroud jobs.
+- Press Ctrl+C, Ctrl+Z, or Ctrl+\ to see how the shell handles signals.(background process only)
 - Use `./test_basic.sh` to test some of built-in commands after `make`. (may need `chmod +x test_basic.sh` before that to give the access right)
 
 

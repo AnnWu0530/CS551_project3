@@ -29,9 +29,12 @@ void sig_handler(int signo) {
             break;
 
         case SIGQUIT:
-            printf("\n[Shell] SIGQUIT received: exiting shell...\n");
-            if (child_pid > 0) kill(child_pid, SIGKILL);
-            exit(0);
+            if (child_pid > 0) {
+                kill(child_pid, SIGKILL); 
+            } else {
+                printf("[Shell] SIGQUIT received: no child process to terminate.\n");
+            }
+            break;
 
         case SIGCHLD:
             // Remove zombie processes
@@ -60,4 +63,12 @@ void setup_signal_handlers() {
     sigaction(SIGTSTP, &sa, NULL);
     sigaction(SIGQUIT, &sa, NULL);
     sigaction(SIGCHLD, &sa, NULL);
+
+    signal(SIGINT, SIG_IGN);
+    signal(SIGTSTP, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
+    signal(SIGCHLD, SIG_IGN);
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
+
 }
