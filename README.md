@@ -27,7 +27,7 @@ The shell continuously accepts user input and provides feedback similar to tradi
   unset      Unset environment variables
   exit       Exit the shell (or quit)
   help       Display help about built-in commands
-  alias      Change the current directory
+  alias      Creating an alias for a command
   jobs       List active jobs
   fg         Resume job in foreground
   bg         Resume job in background
