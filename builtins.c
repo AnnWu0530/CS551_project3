@@ -26,7 +26,7 @@ static builtin_t builtins[] = {
 };
 
 static builtin_t others[] = {
-    {"alias", builtin_cd, "Change the current directory"},
+    {"alias", builtin_cd, "Creating an alias for a command"},
     {"jobs", builtin_pwd, "List active jobs"},
     {"fg", builtin_echo, "Resume job in foreground"},
     {"bg", builtin_export, "Resume job in background"},
